@@ -1,0 +1,6 @@
+services:
+    encoding.converter.basic:
+        class: drakonli\PhpUtils\Encoding\Converter\Basic\BasicEncodingConverter
+
+    url.helper.basic:
+        class: drakonli\PhpUtils\Url\Basic\BasicUrlHelper

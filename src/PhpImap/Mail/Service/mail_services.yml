@@ -1,0 +1,77 @@
+services:
+    mail.repository.basic:
+        class: PhpImap\Mail\Service\Repository\Basic\BasicMailRepository
+        arguments:
+            - '%mail.server.encoding%'
+            - '@mail.search_criteria.path_constructor_basic'
+            - '@mail.exchange_occurred.factory_parameter_bag'
+            - '@mail.exchange_occured.collection_factory_basic'
+
+    mail.marker.composed.basic:
+        class: PhpImap\Mail\Service\Marker\Composed\Basic\ComposedBasicMailMarker
+
+    mail.copier.basic:
+        class: PhpImap\Mail\Service\Copier\Basic\BasicMailCopier
+        arguments:
+            - '@imap.utility.encoder_basic'
+
+    mail.mover.basic:
+        class: PhpImap\Mail\Service\Mover\Basic\BasicMailMover
+        arguments:
+            - '@imap.utility.encoder_basic'
+
+    mail.saver.basic:
+        class: PhpImap\Mail\Service\Saver\Basic\BasicMailSaver
+
+    mail.deleter.basic:
+        class: PhpImap\Mail\Service\Deleter\Basic\BasicMailDeleter
+        arguments:
+            - '@mail.marker.composed.basic'
+
+    mail.counter.basic:
+        class: PhpImap\Mail\Service\Counter\Basic\BasicMailCounter
+
+    mail.manager.delegated:
+        class: PhpImap\Mail\Service\Manager\Delegated\DelegatedMailManager
+        arguments:
+            - '@mail.mover.basic'
+            - '@mail.saver.basic'
+            - '@mail.copier.basic'
+            - '@mail.deleter.basic'
+            - '@mail.counter.basic'
+
+    mail.box.check_info_retriever_basic:
+        class: PhpImap\Mail\Service\Box\Info\Retriever\Check\Basic\BasicMailBoxCheckInfoRetriever
+        arguments:
+            - '@mail.box.check_info_factory_parameter_bag'
+
+    mail.box.status_info_retriever_basic:
+        class: PhpImap\Mail\Service\Box\Info\Retriever\Status\Basic\BasicMailBoxStatusInfoRetriever
+        arguments:
+            - '@connection.config.mail_box_path_constructor_basic'
+            - '@connection.config.mail_box_builder_parameter_bag'
+            - '@mail.box.status_info_factory_parameter_bag'
+            - '@imap.utility.encoder_basic'
+
+    mail.box.complete_info_retriever_basic:
+        class: PhpImap\Mail\Service\Box\Info\Retriever\Complete\Basic\BasicMailBoxCompleteInfoRetriever
+        arguments:
+            - '@mail.box.complete_info_factory_parameter_bag'
+
+    mail.box.quota_retriever_basic:
+        class: PhpImap\Mail\Service\Box\Quota\Retriever\Basic\BasicMailBoxQuotaRetriever
+        arguments:
+            - '@mail.box.quota_factory_parameter_bag'
+
+    mail.box.listing_retriever_basic:
+        class: PhpImap\Mail\Service\Box\Listing\Retriever\Basic\BasicMailBoxListingRetriever
+        arguments:
+            - '@connection.config.mail_box_path_constructor_basic'
+            - '@connection.config.mail_box_builder_parameter_bag'
+            - '@imap.utility.decoder_basic'
+
+    mail.box.creator_basic:
+        class: PhpImap\Mail\Service\Box\Creator\Basic\BasicMailBoxCreator
+        arguments:
+            - '@connection.config.mail_box_path_constructor_basic'
+            - '@connection.config.mail_box_builder_parameter_bag'

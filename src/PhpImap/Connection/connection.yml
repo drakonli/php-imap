@@ -1,0 +1,55 @@
+services:
+    connection.factory.basic:
+        class: PhpImap\Connection\Factory\Basic\BasicConnectionFactory
+        arguments:
+            - '@connection.config.option_bit_mask_constructor_basic'
+            - '@connection.config.mail_box_path_constructor_basic'
+            - '@connection.config.builder_parameter_bag'
+            - '@connection.config.option_collection_factory_basic'
+            - '@connection.config.param_collection_factory_basic'
+            - '@connection.config.mail_box_builder_parameter_bag'
+            - '@connection.config.flag_collection_factory_basic'
+
+    connection.config.option_bit_mask_constructor_basic:
+        class: PhpImap\Connection\Config\Option\BitMask\Constructor\Basic\BasicConnectionConfigOptionBitMaskConstructor
+
+    connection.config.mail_box_path_constructor_basic:
+        class: PhpImap\Connection\Config\Mail\Box\Path\Constructor\Basic\BasicMailBoxConnectionPathConstructor
+
+    connection.config.param_collection_builder_basic:
+        class: PhpImap\Connection\Config\Param\Collection\Builder\Basic\BasicConnectionConfigParamCollectionBuilder
+        shared: false
+
+    connection.config.param_collection_factory_basic:
+        class: PhpImap\Connection\Config\Param\Collection\Factory\Basic\BasicConnectionConfigParamCollectionFactory
+
+    connection.config.option_collection_factory_basic:
+        class: PhpImap\Connection\Config\Option\Collection\Factory\Basic\BasicConnectionConfigOptionCollectionFactory
+
+    connection.config.option_collection_builder_basic:
+        class: PhpImap\Connection\Config\Option\Collection\Builder\Basic\BasicConnectionOptionsConfigBuilder
+        shared: false
+
+    connection.config.builder_parameter_bag:
+        class: PhpImap\Connection\Config\Builder\ParameterBag\ParameterBagConnectionConfigBuilder
+        shared: false
+
+    connection.config.mail_box_builder_parameter_bag:
+        class: PhpImap\Connection\Config\Mail\Box\Builder\ParameterBag\ParameterBagMailBoxConnectionConfigBuilder
+        shared: false
+        arguments:
+            - '@imap.utility.encoder_basic'
+
+    connection.config.mail_box_flag_factory_parameter_bag:
+        class: PhpImap\Connection\Config\Mail\Box\Flag\Factory\ParameterBag\ParameterBagMailBoxConnectionConfigFlagFactory
+
+    connection.config.mail_box_flag_collection_builder_basic:
+        class: PhpImap\Connection\Config\Mail\Box\Flag\Collection\Builder\Basic\BasicMailBoxConnectionConfigFlagCollectionBuilder
+        shared: false
+        arguments:
+            - '@connection.config.mail_box_flag_factory_parameter_bag'
+
+    connection.config.flag_collection_factory_basic:
+        class: PhpImap\Connection\Config\Mail\Box\Flag\Collection\Factory\Basic\BasicMailBoxConnectionConfigFlagCollectionFactory
+        arguments:
+            - '@connection.config.mail_box_flag_factory_parameter_bag'

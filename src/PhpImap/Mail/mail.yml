@@ -1,0 +1,120 @@
+services:
+    mail.exchange_occurred.factory_parameter_bag:
+        class: PhpImap\Mail\Exchange\Occurred\Factory\ParameterBag\ParameterBagExchangeOccurredMailFactory
+        arguments:
+            - '@mail.exchange_occurred.builder_parameter_bag'
+            - '@mail.exchange_occurred.builder_director_basic'
+
+    mail.exchange_occurred.builder_parameter_bag:
+        class: PhpImap\Mail\Exchange\Occurred\Builder\ParameterBag\ParameterBagExchangeOccurredMailBuilder
+        shared: false
+        arguments:
+            - '%mail.server.encoding%'
+            - '@mail.exchange_occurred.participant_collection_factory_basic'
+            - '@encoding.converter.basic'
+            - '@mail.attachment.factory_parameter_bag'
+            - '@mail.attachment.collection_factory_basic'
+
+    mail.exchange_occurred.builder_director_basic:
+        class: PhpImap\Mail\Exchange\Occurred\Builder\Director\Basic\BasicExchangeOccurredMailBuilderDirector
+        shared: false
+        arguments:
+            - '@mail.body_part_structure.collection_factory_basic'
+            - '@mail.header.decoder_basic'
+            - '@mail.body_part_structure.helper_basic'
+            - '@mail.body_part.retriever_basic'
+
+    mail.body_part_structure.collection_factory_basic:
+        class: PhpImap\Mail\Body\Part\Structure\Collection\Factory\Basic\BasicImapMailBodyPartStructureCollectionFactory
+        arguments:
+            - '@mail.body_part_structure.extractor_basic'
+
+    mail.body_part_structure.extractor_basic:
+        class: PhpImap\Mail\Body\Part\Structure\Extractor\Basic\BasicImapMailBodyPartStructureExtractor
+
+    mail.header.decoder_basic:
+        class: PhpImap\Mail\Header\Decoder\Basic\BasicImapHeaderDecoder
+        arguments:
+            - '%mail.server.encoding%'
+            - '@encoding.converter.basic'
+
+    mail.body_part_structure.helper_basic:
+        class: PhpImap\Mail\Body\Part\Structure\Helper\Basic\BasicImapMailBodyPartStructureHelper
+
+    mail.body_part.retriever_basic:
+        class: PhpImap\Mail\Body\Part\Retriever\Basic\BasicMailBodyPartRetriever
+        arguments:
+            - '@mail.body.decoder'
+
+    mail.body.decoder:
+        class: PhpImap\Mail\Body\Decoder\Basic\BasicImapMailBodyDecoder
+
+    mail.exchange_occurred.participant_collection_factory_basic:
+        class: PhpImap\Mail\Exchange\Participant\Collection\Factory\Basic\BasicMailExchangeParticipantCollectionFactory
+        arguments:
+            - '@mail.header.decoder_basic'
+            - '@mail.exchange_occurred.participant_factory_pararameter_bag'
+
+    mail.exchange_occurred.participant_factory_pararameter_bag:
+        class: PhpImap\Mail\Exchange\Participant\Factory\ParameterBag\ParameterBagMailExchangeParticipantFactory
+
+    mail.attachment.factory_parameter_bag:
+        class: PhpImap\Mail\Attachment\Factory\ParameterBag\ParameterBagMailAttachmentFactory
+        arguments:
+            - '@mail.attachment.file_name_generator_basic'
+            - '@mail.attachment.file_path_generator_basic'
+            - '@mail.attachment.id_generator_basic'
+
+    mail.attachment.file_name_generator_basic:
+        class: PhpImap\Mail\Attachment\File\Name\Generator\Basic\BasicMailAttachmentFileNameGenerator
+        arguments:
+            - '@mail.attachment.file_name_decoder_basic'
+
+    mail.attachment.file_path_generator_basic:
+        class: PhpImap\Mail\Attachment\File\Path\Generator\Basic\BasicMailAttachmentFilePathGenerator
+        arguments:
+            - '%mail.attachments.folder%'
+
+    mail.attachment.file_name_decoder_basic:
+        class: PhpImap\Mail\Attachment\File\Name\Decoder\Basic\BasicAttachmentFileNameDecoder
+        arguments:
+            - '%mail.server.encoding%'
+            - '@mail.header.decoder_basic'
+            - '@url.helper.basic'
+            - '@encoding.converter.basic'
+
+    mail.attachment.collection_factory_basic:
+        class: PhpImap\Mail\Attachment\Collection\Factory\Basic\BasicMailAttachmentCollectionFactory
+
+    mail.exchange_occured.collection_factory_basic:
+        class: PhpImap\Mail\Exchange\Occurred\Collection\Factory\Basic\BasicExchangeOccurredMailCollectionFactory
+
+    mail.search_criteria.path_constructor_basic:
+        class: PhpImap\Mail\Criteria\Search\Path\Constructor\Basic\BasicSearchCriteriaPathConstructor
+
+    mail.search_criteria.collection_builder_basic:
+        class: PhpImap\Mail\Criteria\Search\Collection\Builder\Basic\BasicSearchCriteriaCollectionBuilder
+        shared: false
+        arguments:
+            - '@mail.search_criteria.factory_parameter_bag'
+
+    mail.search_criteria.factory_parameter_bag:
+        class: PhpImap\Mail\Criteria\Search\Factory\ParameterBag\ParameterBagSearchCriteriaFactory
+
+    mail.sort_criteria.factory_basic:
+        class: PhpImap\Mail\Criteria\Sort\Factory\Basic\BasicSortCriteriaFactory
+
+    mail.attachment.id_generator_basic:
+        class: PhpImap\Mail\Attachment\Id\Generator\Basic\BasicMailAttachmentIdGenerator
+
+    mail.box.check_info_factory_parameter_bag:
+        class: PhpImap\Mail\Box\Info\Check\Factory\ParameterBag\ParameterBagMailBoxCheckInfoFactory
+
+    mail.box.status_info_factory_parameter_bag:
+        class: PhpImap\Mail\Box\Info\Status\Factory\ParameterBag\ParameterBagMailBoxStatusInfoFactory
+
+    mail.box.complete_info_factory_parameter_bag:
+        class: PhpImap\Mail\Box\Info\Complete\Factory\Basic\ParameterBag\ParameterBagMailBoxCompleteInfoFactory
+
+    mail.box.quota_factory_parameter_bag:
+        class: PhpImap\Mail\Box\Quota\Factory\ParameterBag\ParameterBagMailBoxQuotaFactory

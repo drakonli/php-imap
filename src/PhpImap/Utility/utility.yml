@@ -1,0 +1,10 @@
+services:
+    imap.utility.encoder_basic:
+        class: PhpImap\Utility\Encoder\Basic\BasicImapEncoder
+        arguments:
+            - '%mail.server.encoding%'
+
+    imap.utility.decoder_basic:
+        class: PhpImap\Utility\Decoder\Basic\BasicImapDecoder
+        arguments:
+            - '%mail.server.encoding%'

@@ -1,0 +1,3 @@
+parameters:
+    mail.server.encoding: UTF-8
+    mail.attachments.folder: /var/tmp

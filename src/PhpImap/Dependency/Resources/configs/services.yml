@@ -1,0 +1,6 @@
+imports:
+    - { resource: vendor.yml }
+    - { resource: ../../../Connection/connection.yml }
+    - { resource: ../../../Utility/utility.yml }
+    - { resource: ../../../Mail/mail.yml }
+    - { resource: ../../../Mail/Service/mail_services.yml }
